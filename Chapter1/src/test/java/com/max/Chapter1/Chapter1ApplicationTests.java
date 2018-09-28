@@ -1,9 +1,12 @@
 package com.max.Chapter1;
 
+import com.max.service.BlogProperties;
 import com.max.web.HelloController;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockServletContext;
@@ -24,15 +27,19 @@ public class Chapter1ApplicationTests {
 
   private MockMvc mvc;
 
+  @Autowired
+  private BlogProperties blogProperties;
+
   @Before
   public void setUp() throws Exception {
-    mvc = MockMvcBuilders.standaloneSetup(new HelloController()).build();
+    mvc = MockMvcBuilders.standaloneSetup(new HelloController(blogProperties.getName())).build();
   }
 
+  @Ignore
   @Test
   public void getHello() throws Exception {
     mvc.perform(MockMvcRequestBuilders.get("/hello").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
-        .andExpect(content().string(equalTo("Hello World! Max")));
+        .andExpect(content().string(equalTo("Hello World!Max")));
   }
 
 }
