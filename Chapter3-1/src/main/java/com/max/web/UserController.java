@@ -3,6 +3,7 @@ package com.max.web;
 import java.util.*;
 
 import com.max.domain.User;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +19,7 @@ public class UserController {
     return new ArrayList<>(users.values());
   }
 
+  @ApiOperation(value = "创建用户", notes = "根据User对象创建用户")
   @RequestMapping(value = "", method = RequestMethod.POST)
   public String postUser(@RequestBody User user) {
     users.put(user.getId(), user);
